@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en" class="semi-dark" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--favicon-->
+    <link rel="icon" th:href="@{/public/images/favicon-32x32.png}" type="image/png" />
+    <!--plugins-->
+    <link th:href="@{/public/plugins/simplebar/css/simplebar.css}" rel="stylesheet" />
+    <link th:href="@{/public/plugins/perfect-scrollbar/css/perfect-scrollbar.css}" rel="stylesheet" />
+    <link th:href="@{/public/plugins/metismenu/css/metisMenu.min.css}" rel="stylesheet" />
+    <!-- loader-->
+    <link th:href="@{/public/css/pace.min.css}" rel="stylesheet" />
+    <script th:src="@{/public/js/pace.min.js}"></script>
+    <!-- Bootstrap CSS -->
+    <link th:href="@{/public/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/public/css/bootstrap-extended.css}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link th:href="@{/public/css/app.css}" rel="stylesheet">
+    <link th:href="@{/public/css/icons.css}" rel="stylesheet">
+    <style>
+        .invalid-feedback {
+            display: block
+        }
+    </style>
+    <title>Dashrock - Bootstrap 5 Admin Dashboard Template</title>
+</head>
+
+<body class="">
+<!--wrapper-->
+<div class="wrapper">
+    <div class="section-authentication-cover">
+        <div class="">
+            <div class="row g-0">
+
+                <div class="col-12 col-xl-7 col-xxl-8 auth-cover-left align-items-center justify-content-center d-none d-xl-flex">
+
+                    <div class="card shadow-none bg-transparent shadow-none rounded-0 mb-0">
+                        <div class="card-body">
+                            <img th:src="@{/public/images/login-images/register-cover.svg}" class="img-fluid auth-img-cover-login" width="550" alt=""/>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-12 col-xl-5 col-xxl-4 auth-cover-right align-items-center justify-content-center">
+                    <div class="card rounded-0 m-3 shadow-none bg-transparent mb-0">
+                        <div class="card-body p-sm-5">
+                            <div class="">
+                                <div class="mb-3 text-center">
+                                    <img th:src="@{/public/images/logo-icon.png}" width="60" alt="" />
+                                </div>
+                                <div class="text-center mb-4">
+                                    <h5 class="">Dashrock Admin</h5>
+                                    <p class="mb-0">Please fill the below details to create your account</p>
+                                </div>
+                                <div class="form-body">
+                                    <form class="row g-3" th:action="@{/signup}" th:object="${user}" method="post" >
+                                        <div class="col-12">
+                                            <label for="inputUsername" class="form-label">Username</label>
+                                            <input type="text" th:class="${#fields.hasErrors('username')} ? 'form-control is-invalid'  : 'form-control'"
+                                                   id="inputUsername"
+                                                   placeholder="Jhon84"
+                                                   th:field="*{username}">
+                                            <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" id="validationServerUsernameFeedback"  class="invalid-feedback" >
+                                                <span th:text="${#fields.errors('username')}"></span>
+                                            </div>
+
+                                            <div th:if="${errorUsername}"
+                                                 class="invalid-feedback">Username is already exists!
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="inputFirstName" class="form-label">First Name</label>
+                                            <input type="text" th:class="${#fields.hasErrors('firstName')} ? 'form-control is-invalid' : 'form-control'" id="inputFirstName"  placeholder="Jhon"
+                                                   th:field="*{firstName}">
+                                            <!-- Add error message (if present) -->
+                                            <div th:if="${#fields.hasErrors('firstName')}"
+                                                  th:errors="*{firstName}"
+                                                  class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="inputLastName" class="form-label">Last Name</label>
+                                            <input type="text" th:class="${#fields.hasErrors('lastName')} ? 'form-control is-invalid' : 'form-control'" id="inputLastName" placeholder="Smith"
+                                                   th:field="*{lastName}">
+                                            <div th:if="${#fields.hasErrors('lastName')}"
+                                                 th:errors="*{lastName}"
+                                                 class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="inputEmailAddress" class="form-label">Email Address</label>
+                                            <input type="email" th:class="${#fields.hasErrors('email')} ? 'form-control is-invalid' : 'form-control'" id="inputEmailAddress" placeholder="example@user.com"
+                                                   th:field="*{email}">
+                                            <div th:if="${#fields.hasErrors('email')}"
+                                                 th:errors="*{email}"
+                                                 class="invalid-feedback">
+                                            </div>
+                                            <div th:if="${errorEmail}"
+                                                 class="invalid-feedback">Email is already exists!
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="inputChoosePassword" class="form-label">Password</label>
+                                            <div class="input-group" id="show_hide_password">
+                                                <input type="password" th:class="${#fields.hasErrors('username')} ? 'form-control border-end-0 is-invalid' : 'form-control border-end-0'"  id="inputChoosePassword" placeholder="Enter Password"
+                                                       th:field="*{password}">
+                                                <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                            </div>
+                                            <div th:if="${#fields.hasErrors('password')}"
+                                                 th:errors="*{password}"
+                                                 class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="isChecked">
+                                                <label class="form-check-label" for="flexSwitchCheckChecked">I read and agree to Terms & Conditions</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="d-grid">
+                                                <button type="submit" class="btn btn-primary" id="submitButton" disabled >Sign up</button>
+                                            </div>
+                                        </div>
+                                        <br>
+
+                                        <span id="errorSpan" style="color: red; display: none;" class="invalid-feedback">Please check the checkbox before submitting.</span>
+
+                                        <br>
+                                        <div class="col-12">
+                                            <div class="text-center ">
+                                                <p class="mb-0">Already have an account? <a th:href="@{/authenticated}">Sign in here</a></p>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="login-separater text-center mb-5"> <span>OR SIGN UP WITH EMAIL</span>
+                                    <hr/>
+                                </div>
+                                <div class="list-inline contacts-social text-center">
+                                    <a href="javascript:;" class="list-inline-item bg-facebook text-white border-0 rounded-3"><i class="bx bxl-facebook"></i></a>
+                                    <a href="javascript:;" class="list-inline-item bg-twitter text-white border-0 rounded-3"><i class="bx bxl-twitter"></i></a>
+                                    <a href="javascript:;" class="list-inline-item bg-google text-white border-0 rounded-3"><i class="bx bxl-google"></i></a>
+                                    <a href="javascript:;" class="list-inline-item bg-linkedin text-white border-0 rounded-3"><i class="bx bxl-linkedin"></i></a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--end row-->
+        </div>
+    </div>
+</div>
+<!--end wrapper-->
+<!-- Bootstrap JS -->
+<script th:src="@{/public/js/bootstrap.bundle.min.js}"></script>
+<!--plugins-->
+<script th:src="@{/public/js/jquery.min.js}"></script>
+<script th:src="@{/public/plugins/simplebar/js/simplebar.min.js}"></script>
+<script th:src="@{/public/plugins/metismenu/js/metisMenu.min.js}"></script>
+<script th:src="@{/public/plugins/perfect-scrollbar/js/perfect-scrollbar.js}"></script>
+<!--Password show & hide js -->
+<script>
+    $(document).ready(function () {
+        $("#show_hide_password a").on('click', function (event) {
+            event.preventDefault();
+            if ($('#show_hide_password input').attr("type") == "text") {
+                $('#show_hide_password input').attr('type', 'password');
+                $('#show_hide_password i').addClass("bx-hide");
+                $('#show_hide_password i').removeClass("bx-show");
+            } else if ($('#show_hide_password input').attr("type") == "password") {
+                $('#show_hide_password input').attr('type', 'text');
+                $('#show_hide_password i').removeClass("bx-hide");
+                $('#show_hide_password i').addClass("bx-show");
+            }
+        });
+    });
+
+    // Get references to the checkbox and submit button
+        var checkbox = document.getElementById("flexSwitchCheckChecked");
+        var submitButton = document.getElementById("submitButton");
+
+        // Add an event listener to the checkbox
+        checkbox.addEventListener("change", function () {
+            if (checkbox.checked) {
+                // If the checkbox is checked, enable the submit button
+                submitButton.removeAttribute("disabled");
+            } else {
+                // If the checkbox is unchecked, disable the submit button
+                submitButton.setAttribute("disabled", "disabled");
+            }
+        });
+</script>
+<!--app JS-->
+<script th:src="@{/public/js/app.js}"></script>
+</body>
+
+</html>
