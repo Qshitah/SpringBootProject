@@ -58,8 +58,13 @@
                                     <div th:if="${successPasswordChanged}"
                                             class="valid-feedback" th:text="${successPasswordChanged}">
                                     </div>
+
                                     <div th:if="${errorPasswordChanged}"
                                          class="invalid-feedback" th:text="${errorPasswordChanged}">
+                                    </div>
+
+                                    <div th:if="${verifyNewEmail}"
+                                         class="invalid-feedback" th:text="${verifyNewEmail}">
                                     </div>
 
                                     <!-- Check if the logout parameter is present and equal to "true" -->

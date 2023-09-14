@@ -19,8 +19,8 @@ public class Token  {
     @Column(name = "expiration_datetime")
     private LocalDateTime expirationDateTime;
 
-    @Column(name = "created_at")
-    private LocalDateTime created_at;
+    @Column(name = "tokentype")
+    private String toketype;
 
     @OneToOne(fetch = FetchType.LAZY,cascade = {CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST})
     @JoinColumn(name = "user_id")
@@ -30,10 +30,10 @@ public class Token  {
 
     }
 
-    public Token(String token, LocalDateTime expirationDateTime, LocalDateTime created_at) {
+    public Token(String token, LocalDateTime expirationDateTime, String toketype) {
         this.token = token;
         this.expirationDateTime = expirationDateTime;
-        this.created_at = created_at;
+        this.toketype = toketype;
     }
 
     public int getId() {
@@ -60,12 +60,12 @@ public class Token  {
         this.expirationDateTime = expirationDateTime;
     }
 
-    public LocalDateTime getCreated_at() {
-        return created_at;
+    public String getToketype() {
+        return toketype;
     }
 
-    public void setCreated_at(LocalDateTime created_at) {
-        this.created_at = created_at;
+    public void setToketype(String toketype) {
+        this.toketype = toketype;
     }
 
     public User getUser() {
@@ -82,7 +82,7 @@ public class Token  {
                 "id=" + id +
                 ", token='" + token + '\'' +
                 ", expirationDateTime=" + expirationDateTime +
-                ", created_at=" + created_at +
+                ", toketype=" + toketype +
                 '}';
     }
 }

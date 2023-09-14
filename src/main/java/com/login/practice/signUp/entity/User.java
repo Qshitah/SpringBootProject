@@ -1,5 +1,6 @@
 package com.login.practice.signUp.entity;
 
+import com.login.practice.Entity.Address;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -58,12 +59,38 @@ public class User {
     @Column(name = "enabled")
     private int enabled;
 
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "job_title")
+    private String job_title;
+
+    @Column(name = "website")
+    private String website;
+
+
+    @Column(name = "github")
+    private String github;
+
+    @Column(name = "twitter")
+    private String twitter;
+
+    @Column(name = "instagram")
+    private String instagram;
+
+    @Column(name = "facebook")
+    private String facebook;
+
     @OneToOne(mappedBy = "user",cascade = {CascadeType.ALL})
     private Token token;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "smtp_config_id") // Define a join column
     private SmtpConfig smtpConfig;
+
+    @OneToOne(mappedBy = "user",cascade = {CascadeType.ALL})
+    private Address address;
+
 
 
     // Constructors, getters, and setters
@@ -74,12 +101,25 @@ public class User {
     }
 
 
-    public User(String username, String email, String password, String firstName, String lastName) {
+    public User(Long id, String username, String email, String password,
+                String firstName, String lastName, Date createdAt, int enabled,
+                String phone, String job_title, String website,
+                String github, String twitter, String instagram, String facebook) {
+        this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.createdAt = createdAt;
+        this.enabled = enabled;
+        this.phone = phone;
+        this.job_title = job_title;
+        this.website = website;
+        this.github = github;
+        this.twitter = twitter;
+        this.instagram = instagram;
+        this.facebook = facebook;
     }
 
     public SmtpConfig getSmtpConfig() {
@@ -171,7 +211,69 @@ public class User {
         this.createdAt = createdAt;
     }
 
+    public String getPhone() {
+        return phone;
+    }
 
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getJob_title() {
+        return job_title;
+    }
+
+    public void setJob_title(String job_title) {
+        this.job_title = job_title;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getGithub() {
+        return github;
+    }
+
+    public void setGithub(String github) {
+        this.github = github;
+    }
+
+    public String getTwitter() {
+        return twitter;
+    }
+
+    public void setTwitter(String twitter) {
+        this.twitter = twitter;
+    }
+
+    public String getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
+    }
+
+    public String getFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(String facebook) {
+        this.facebook = facebook;
+    }
 
     @Override
     public String toString() {
@@ -183,6 +285,14 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", createdAt=" + createdAt +
+                ", enabled=" + enabled +
+                ", phone='" + phone + '\'' +
+                ", job_title='" + job_title + '\'' +
+                ", website='" + website + '\'' +
+                ", github='" + github + '\'' +
+                ", twitter='" + twitter + '\'' +
+                ", instagram='" + instagram + '\'' +
+                ", facebook='" + facebook + '\'' +
                 '}';
     }
 }

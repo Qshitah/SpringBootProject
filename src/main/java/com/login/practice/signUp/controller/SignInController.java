@@ -50,13 +50,11 @@ public class SignInController {
             // Retrieve the success message and add it to the model
             String successMessage = (String) theModel.asMap().get("successPasswordChanged");
             theModel.addAttribute("successPasswordChanged", successMessage);
-            System.out.println(successMessage);
         }
         if (theModel.containsAttribute("errorPasswordChanged")) {
             // Retrieve the success message and add it to the model
             String errorMessage = (String) theModel.asMap().get("errorPasswordChanged");
             theModel.addAttribute("errorPasswordChanged", errorMessage);
-            System.out.println(errorMessage);
 
         }
 

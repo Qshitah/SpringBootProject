@@ -22,7 +22,6 @@ public class TokenService {
         // Set the expiration time, for example , one hour from now
         token.setExpirationDateTime(LocalDateTime.now().plusHours(1));
         token.setUser(user);
-        token.setCreated_at(LocalDateTime.now());
 
         return  tokenRepository.save(token);
 
