@@ -131,7 +131,8 @@ CREATE TABLE Category (
     UpdatedAt TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-
+CREATE UNIQUE INDEX index_categoryName
+ON category (CategoryName);
 
 
 -- Create the ParentCategory table
@@ -143,8 +144,19 @@ CREATE TABLE ParentCategory (
     UpdatedAt TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+CREATE UNIQUE INDEX index_parentCategoryName
+ON ParentCategory (ParentCategoryName);
+
 alter table Product add constraint fk_product_category foreign key (category_id) references category(id);
 alter table category add constraint fk_category_parentCategory foreign key (parentCategory_id) references parentCategory(id);
+
+alter table Product
+add column user_id int,
+add constraint fk_product_users
+foreign key(user_id)
+references users(id);
+
+
 
 insert into smtp_config values
 (1,"smtp.gmail.com","587","marouan.akechtah@gmail.com","vpqhwltkpllapuvr");

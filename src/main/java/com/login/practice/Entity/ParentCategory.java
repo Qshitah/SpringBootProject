@@ -13,7 +13,7 @@ public class ParentCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
 
-    @OneToMany(mappedBy = "parentCategory")
+    @OneToMany(mappedBy = "parentCategory",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Category> categoryList;
 
     @Column(name = "ParentCategoryName")

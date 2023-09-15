@@ -1017,7 +1017,7 @@
 				<div class="card-body p-4">
 					<h5 class="card-title">Add New Product</h5>
 					<hr/>
-					<div class="form-body mt-4">
+					<form class="form-body mt-4" th:action="@{/add-product}" th:object="${product}" method="post">
 						<div class="row">
 							<div class="col-lg-8">
 								<div class="border border-3 p-4 rounded">
@@ -1066,13 +1066,13 @@
 											<label for="inputWeight" class="form-label">Weight</label>
 											<input type="number" name="weight" class="form-control" id="inputWeight" placeholder="00.00">
 										</div>
-										<div class="col-12">
+										<div class="col-12" th:object="${category}">
 											<label for="inputCategory" class="form-label">Category</label>
-											<input type="text" class="form-control" name="category" id="inputCategory">
+											<input type="text" class="form-control" name="categoryName" id="inputCategory">
 										</div>
-										<div class="col-12">
+										<div class="col-12" th:object="${parentCategory}">
 											<label for="inputParentCategory" class="form-label">Parent Category</label>
-											<input type="text" class="form-control" name="parentCategory" id="inputParentCategory">
+											<input type="text" class="form-control" name="name" id="inputParentCategory">
 										</div>
 										<div class="col-12">
 											<label for="inputColors" class="form-label">Colors <i>(Enter Variant Seperate with '/')</i></label>
@@ -1091,7 +1091,7 @@
 								</div>
 							</div>
 						</div><!--end row-->
-					</div>
+					</form>
 				</div>
 			</div>
 

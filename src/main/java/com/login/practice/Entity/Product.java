@@ -1,5 +1,6 @@
 package com.login.practice.Entity;
 
+import com.login.practice.signUp.entity.User;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -31,6 +32,13 @@ public class Product {
             ,CascadeType.REFRESH})
     @JoinColumn(name = "category_id")
     private Category category;
+
+
+    @ManyToOne(fetch = FetchType.LAZY,cascade = {CascadeType.DETACH,CascadeType.MERGE
+            ,CascadeType.PERSIST
+            ,CascadeType.REFRESH})
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "SalePrice")
     private float salePrice;
@@ -91,6 +99,14 @@ public class Product {
         this.productImages = productImages;
         this.variantColors = variantColors;
         this.variantSizes = variantSizes;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getId() {

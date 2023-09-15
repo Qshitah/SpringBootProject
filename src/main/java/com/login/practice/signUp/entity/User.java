@@ -1,6 +1,7 @@
 package com.login.practice.signUp.entity;
 
 import com.login.practice.Entity.Address;
+import com.login.practice.Entity.Product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -55,6 +56,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> roles;
+
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<Product> products;
 
     @Column(name = "enabled")
     private int enabled;
@@ -120,6 +124,14 @@ public class User {
         this.twitter = twitter;
         this.instagram = instagram;
         this.facebook = facebook;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     public SmtpConfig getSmtpConfig() {
