@@ -81,7 +81,7 @@ public class Product {
     }
 
     public Product(int id, String sku, String productName,
-                   String description, float regularPrice,
+                   String description,
                    float regularPrice1, float salePrice,
                    float costPrice, int stockQuantity,
                    float weight, String productImages,
@@ -90,7 +90,6 @@ public class Product {
         this.sku = sku;
         this.productName = productName;
         this.description = description;
-        this.regularPrice = regularPrice;
         this.regularPrice = regularPrice1;
         this.salePrice = salePrice;
         this.costPrice = costPrice;

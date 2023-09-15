@@ -25,7 +25,7 @@ public class AddProductController {
     private ProductRepository productRepository;
 
     @GetMapping("/add-product")
-    public String addProduct(Model model, Authentication authentication){
+    public String addProduct(Model model){
         Product product = new Product();
         Category category = new Category();
         ParentCategory parentCategory = new ParentCategory();
@@ -38,7 +38,7 @@ public class AddProductController {
         return "add-product";
     }
 
-    /*@PostMapping("/add-product")
+    @PostMapping("/add-product")
     public String postAddProduct(@ModelAttribute("product") Product product,
                                  @ModelAttribute("category") Category category,
                                  @ModelAttribute("parentCategory") ParentCategory parentCategory,
@@ -48,5 +48,49 @@ public class AddProductController {
         User currentUser = userRepository.findByUsername(authentication.getName());
 
 
-    }*/
+        String productName = product.getProductName();
+        if(productName == null || productName.isEmpty()){
+            model.addAttribute("failedProductName",true);
+            return "add-product";
+        }
+
+        String sku = product.getSku();
+        if(sku == null || sku.isEmpty()){
+            model.addAttribute("failedSKU",true);
+            return "add-product";
+        }
+
+        String description = product.getDescription();
+        if(description == null || description.isEmpty()){
+            model.addAttribute("failedDescription",true);
+            return "add-product";
+        }
+
+        float price = product.getRegularPrice();
+        if(price == 0){
+            model.addAttribute("failedPrice",true);
+            return "add-product";
+        }
+
+        float salePrice = product.getSalePrice();
+        if(salePrice > price){
+            model.addAttribute("failedSalePrice",true);
+            return "add-product";
+        }
+
+        float costPrice = product.getCostPrice();
+        if(costPrice > price){
+            model.addAttribute("failedCostPrice",true);
+            return "add-product";
+        }
+
+
+
+
+
+
+        return null;
+
+
+    }
 }
