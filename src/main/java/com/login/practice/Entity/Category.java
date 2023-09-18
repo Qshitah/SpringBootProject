@@ -19,11 +19,11 @@ public class Category {
     @ManyToOne(fetch = FetchType.LAZY,cascade = {CascadeType.DETACH,CascadeType.MERGE
             ,CascadeType.PERSIST
             ,CascadeType.REFRESH})
-    @JoinColumn(name = "parentCategory_id")
+    @JoinColumn(name = "parentcategory_id")
     private ParentCategory parentCategory ;
 
-    @Column(name = "CategoryName")
-    private String categoryName;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "IsActive")
     private int isActive;
@@ -38,9 +38,9 @@ public class Category {
 
     }
 
-    public Category(int id, String categoryName, int isActive) {
+    public Category(int id, String name, int isActive) {
         Id = id;
-        this.categoryName = categoryName;
+        this.name = name;
         this.isActive = isActive;
     }
 
@@ -68,12 +68,12 @@ public class Category {
         this.parentCategory = parentCategory;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public String getName() {
+        return name;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getIsActive() {
@@ -104,7 +104,7 @@ public class Category {
     public String toString() {
         return "Category{" +
                 "Id=" + Id +
-                ", categoryName='" + categoryName + '\'' +
+                ", name='" + name + '\'' +
                 ", isActive=" + isActive +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +

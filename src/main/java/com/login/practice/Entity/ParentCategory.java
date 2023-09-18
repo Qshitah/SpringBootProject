@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "parentCategory")
+@Table(name = "parentcategory")
 public class ParentCategory {
 
     @Id
@@ -16,7 +16,7 @@ public class ParentCategory {
     @OneToMany(mappedBy = "parentCategory",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Category> categoryList;
 
-    @Column(name = "ParentCategoryName")
+    @Column(name = "name")
     private String name;
 
     @Column(name = "IsActive")

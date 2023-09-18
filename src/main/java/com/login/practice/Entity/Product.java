@@ -25,7 +25,7 @@ public class Product {
     private String description;
 
     @Column(name = "RegularPrice")
-    private float regularPrice;
+    private Float regularPrice;
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = {CascadeType.DETACH,CascadeType.MERGE
             ,CascadeType.PERSIST
@@ -41,16 +41,16 @@ public class Product {
     private User user;
 
     @Column(name = "SalePrice")
-    private float salePrice;
+    private Float salePrice;
 
     @Column(name = "CostPrice")
-    private float costPrice;
+    private Float costPrice;
 
     @Column(name = "StockQuantity")
-    private int stockQuantity;
+    private Integer stockQuantity;
 
     @Column(name = "Weight")
-    private float weight;
+    private Float weight;
 
     @Column(name = "ReleaseDate")
     private Date releaseDate;
@@ -82,9 +82,9 @@ public class Product {
 
     public Product(int id, String sku, String productName,
                    String description,
-                   float regularPrice1, float salePrice,
-                   float costPrice, int stockQuantity,
-                   float weight, String productImages,
+                   Float regularPrice1, Float salePrice,
+                   Float costPrice, Integer stockQuantity,
+                   Float weight, String productImages,
                    String variantColors, String variantSizes) {
         Id = id;
         this.sku = sku;
@@ -140,43 +140,43 @@ public class Product {
         this.description = description;
     }
 
-    public float getRegularPrice() {
+    public Float getRegularPrice() {
         return regularPrice;
     }
 
-    public void setRegularPrice(float regularPrice) {
+    public void setRegularPrice(Float regularPrice) {
         this.regularPrice = regularPrice;
     }
 
-    public float getSalePrice() {
+    public Float getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(float salePrice) {
+    public void setSalePrice(Float salePrice) {
         this.salePrice = salePrice;
     }
 
-    public float getCostPrice() {
+    public Float getCostPrice() {
         return costPrice;
     }
 
-    public void setCostPrice(float costPrice) {
+    public void setCostPrice(Float costPrice) {
         this.costPrice = costPrice;
     }
 
-    public int getStockQuantity() {
+    public Integer getStockQuantity() {
         return stockQuantity;
     }
 
-    public void setStockQuantity(int stockQuantity) {
+    public void setStockQuantity(Integer stockQuantity) {
         this.stockQuantity = stockQuantity;
     }
 
-    public float getWeight() {
+    public Float getWeight() {
         return weight;
     }
 
-    public void setWeight(float weight) {
+    public void setWeight(Float weight) {
         this.weight = weight;
     }
 

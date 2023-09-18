@@ -91,10 +91,6 @@ public class UserProfileController {
             return "user-profile";
         }
 
-        if(userRepository.findByEmail(email) != null){
-            model.addAttribute("failedEmail",true);
-            return "user-profile";
-        }
 
         String phone = user.getPhone();
         if(!phone.isEmpty() && phone.length() < 5){

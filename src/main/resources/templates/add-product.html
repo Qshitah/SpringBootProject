@@ -17,6 +17,7 @@
 	<script th:src="@{/public/js/pace.min.js}"></script>
 	<!-- Bootstrap CSS -->
 	<link th:href="@{/public/css/bootstrap.min.css}" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<link th:href="@{/public/css/bootstrap-extended.css}" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 	<link th:href="@{/public/css/app.css}" rel="stylesheet">
@@ -26,6 +27,11 @@
 	<link rel="stylesheet" th:href="@{/public/css/semi-dark.css}" />
 	<link rel="stylesheet" th:href="@{/public/css/header-colors.css}" />
 	<title>Dashrock - Bootstrap 5 Admin Dashboard Template</title>
+	<style>
+		.invalid-feedback,.valid-feedback {
+            display: block
+        }
+	</style>
 </head>
 
 <body>
@@ -1017,25 +1023,44 @@
 				<div class="card-body p-4">
 					<h5 class="card-title">Add New Product</h5>
 					<hr/>
-					<form class="form-body mt-4" th:action="@{/add-product}" th:object="${product}" method="post">
+					<form class="form-body mt-4" th:action="@{/add-product}" th:object="${product}" method="post" enctype="multipart/form-data">
 						<div class="row">
 							<div class="col-lg-8">
 								<div class="border border-3 p-4 rounded">
 									<div class="mb-3">
 										<label for="inputProductTitle" class="form-label">Product Title</label>
-										<input type="text" class="form-control"  id="inputProductTitle" placeholder="Enter product title">
+										<input type="text" name="productName" th:class="${failedProductName} ? 'form-control is-invalid' : 'form-control'"
+											   id="inputProductTitle" th:field="*{productName}" placeholder="Enter product title">
+										<div th:if="${failedProductName}"
+											 class="invalid-feedback">Product Name is Empty!
+										</div>
+										<div th:if="${existsProductName}"
+											 class="invalid-feedback">Product Name Exists!
+										</div>
 									</div>
 									<div class="mb-3">
 										<label for="inputProductSKU" class="form-label">SKU</label>
-										<input type="text" class="form-control"  id="inputProductSKU" placeholder="Enter SKU">
+										<input type="text" name="sku" th:class="${failedSKU} ? 'form-control is-invalid' : 'form-control'"
+											   id="inputProductSKU" th:field="*{sku}" placeholder="Enter SKU">
+										<div th:if="${failedSKU}"
+											 class="invalid-feedback">SKU is Empty!
+										</div>
 									</div>
 									<div class="mb-3">
 										<label for="inputProductDescription" class="form-label">Description</label>
-										<textarea class="form-control" id="inputProductDescription" rows="3"></textarea>
+										<textarea th:class="${failedDescription} ? 'form-control is-invalid' : 'form-control'"
+												  name="description"
+												  id="inputProductDescription" th:field="*{description}" rows="3"></textarea>
+										<div th:if="${failedDescription}" id="validationDescription"
+											 class="invalid-feedback"><span>Description is Empty!</span>
+										</div>
 									</div>
 									<div class="mb-3">
-										<label for="inputProductDescription" class="form-label">Product Images</label>
-										<input id="image-uploadify" type="file" accept=".xlsx,.xls,image/*,.doc,audio/*,.docx,video/*,.ppt,.pptx,.txt,.pdf" multiple>
+										<label for="image-uploadify" class="form-label">Product Images</label>
+										<input id="image-uploadify" name="image-uploadify" type="file" accept="image/*" multiple>
+									</div>
+									<div th:if="${failedFile}"
+										 class="invalid-feedback"><span>Images is Empty!</span>
 									</div>
 								</div>
 							</div>
@@ -1044,43 +1069,67 @@
 									<div class="row g-3">
 										<div class="col-md-6">
 											<label for="inputPrice" class="form-label">Price</label>
-											<input type="number" name="regularPrice" class="form-control" id="inputPrice" placeholder="00.00">
+											<input type="number" name="regularPrice" th:class="${failedPrice} ? 'form-control is-invalid' : 'form-control'"
+												   id="inputPrice" th:field="*{regularPrice}" placeholder="00.00">
+											<div th:if="${failedPrice}"
+												 class="invalid-feedback">Price is Empty!
+											</div>
 										</div>
 										<div class="col-md-6">
 											<label for="inputSalePrice" class="form-label">Sale Price</label>
-											<input type="number" name="salePrice" class="form-control" id="inputSalePrice" placeholder="00.00">
+											<input type="number" name="salePrice" th:class="${failedSalePrice} ? 'form-control is-invalid' : 'form-control'"
+												   id="inputSalePrice" th:field="*{salePrice}" placeholder="00.00">
+											<div th:if="${failedSalePrice}"
+												 class="invalid-feedback">Sale shouldn't be higher than Price!
+											</div>
 										</div>
 										<div class="col-md-6">
 											<label for="inputCostPerPrice" class="form-label">Cost Per Price</label>
-											<input type="number" name="costPrice" class="form-control" id="inputCostPerPrice" placeholder="00.00">
+											<input type="number" name="costPrice" th:class="${failedCostPrice} ? 'form-control is-invalid' : 'form-control'"
+												   id="inputCostPerPrice" th:field="*{costPrice}" placeholder="00.00">
+											<div th:if="${failedCostPrice}"
+												 class="invalid-feedback">Cost Price shouldn't be Empty and higher than Price!
+											</div>
 										</div>
 										<div class="col-md-6">
 											<label for="inputStarPoints" class="form-label">Star Points</label>
-											<input type="range" name="starsPoints" class="form-range" min="0" max="5" step="1"  id="inputStarPoints" placeholder="00.00">
+											<input type="range" class="form-range" min="0" max="5" step="1"  id="inputStarPoints" placeholder="00.00">
 										</div>
 										<div class="col-md-6">
 											<label for="inputQuantity" class="form-label">Stock Quantity</label>
-											<input type="number" name="stockQuantity" class="form-control" id="inputQuantity" placeholder="00.00">
+											<input type="number" name="stockQuantity" th:field="*{stockQuantity}"  class="form-control" id="inputQuantity" placeholder="00.00">
 										</div>
 										<div class="col-md-6">
 											<label for="inputWeight" class="form-label">Weight</label>
-											<input type="number" name="weight" class="form-control" id="inputWeight" placeholder="00.00">
+											<input type="number" name="weight" th:field="*{weight}" class="form-control" id="inputWeight" placeholder="00.00">
 										</div>
-										<div class="col-12" th:object="${category}">
+										<div class="col-12" >
+											<label for="parentCategorySelect" class="form-label">Parent Category</label>
+											<select id="parentCategorySelect" th:class="${failedParentCategory} ? 'form-select is-invalid' : 'form-select'"
+													name="parentCategory"  >
+												<option value="">Select Parent Category</option>
+												<option th:each="parentCategory : ${parentCategories}" th:value="${parentCategory.id}" th:text="${parentCategory.name}"></option>
+											</select>
+											<div th:if="${failedParentCategory}"
+												 class="invalid-feedback">Parent Category shouldn't be Empty!
+											</div>
+										</div>
+										<div class="col-12" >
 											<label for="inputCategory" class="form-label">Category</label>
-											<input type="text" class="form-control" name="categoryName" id="inputCategory">
-										</div>
-										<div class="col-12" th:object="${parentCategory}">
-											<label for="inputParentCategory" class="form-label">Parent Category</label>
-											<input type="text" class="form-control" name="name" id="inputParentCategory">
+											<select id="inputCategory" th:class="${failedCategory} ? 'form-select is-invalid' : 'form-select'" name="category">
+												<option value="">Select Category</option>
+											</select>
+											<div th:if="${failedCategory}"
+												 class="invalid-feedback">Category shouldn't be Empty!
+											</div>
 										</div>
 										<div class="col-12">
 											<label for="inputColors" class="form-label">Colors <i>(Enter Variant Seperate with '/')</i></label>
-											<input type="text" class="form-control" name="colors" id="inputColors">
+											<input type="text" class="form-control" th:field="*{variantColors}" name="variantColors" id="inputColors">
 										</div>
 										<div class="col-12">
 											<label for="inputSizes" class="form-label">Sizes<i>(Enter Variant Seperate with '/')</i></label>
-											<input type="text" class="form-control" name="sizes" id="inputSizes">
+											<input type="text" class="form-control" th:field="*{variantSizes}" name="variantSizes" id="inputSizes">
 										</div>
 										<div class="col-12">
 											<div class="d-grid">
@@ -1255,6 +1304,42 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function() {
+        // When the parent category select changes
+        $('#parentCategorySelect').change(function() {
+            var parentCategoryId = $(this).val();
+            console.log(parentCategoryId)
+
+            // Make an AJAX request to fetch child categories
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8080/api/categories/search/findByParentCategory_Id?parentId=' + parentCategoryId,
+                dataType: 'json',
+                success: function(data) {
+                	console.log("Good");
+                    // Clear and populate the child category select element
+                    $('#inputCategory').empty();
+                    $('#inputCategory').append($('<option>', {
+                        value: '',
+                        text: 'Select Category'
+                    }));
+                    $.each(data._embedded.categories, function(index, category) {
+                        $('#inputCategory').append($('<option>', {
+                            value: category.id,
+                            text: category.name
+                        }));
+                    });
+                },
+                error: function() {
+                    console.log('Error fetching child categories');
+                }
+            });
+        });
+    });
+
+</script>
 <!--end switcher-->
 <!-- Bootstrap JS -->
 <script th:src="@{/public/js/bootstrap.bundle.min.js}"></script>
@@ -1264,11 +1349,7 @@
 <script th:src="@{/public/plugins/metismenu/js/metisMenu.min.js}"></script>
 <script th:src="@{/public/plugins/perfect-scrollbar/js/perfect-scrollbar.js}"></script>
 <script th:src="@{/public/plugins/Drag-And-Drop/dist/imageuploadify.min.js}"></script>
-<script>
-	$(document).ready(function () {
-        $('#image-uploadify').imageuploadify();
-    })
-</script>
+
 <!--app JS-->
 <script th:src="@{/public/js/app.js}"></script>
 </body>
