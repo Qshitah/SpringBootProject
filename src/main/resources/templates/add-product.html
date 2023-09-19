@@ -1058,10 +1058,11 @@
 									<div class="mb-3">
 										<label for="image-uploadify" class="form-label">Product Images</label>
 										<input id="image-uploadify" name="image-uploadify" type="file" accept="image/*" multiple>
+										<div th:if="${failedFile}"
+											 class="invalid-feedback"><span>Images is Empty!</span>
+										</div>
 									</div>
-									<div th:if="${failedFile}"
-										 class="invalid-feedback"><span>Images is Empty!</span>
-									</div>
+
 								</div>
 							</div>
 							<div class="col-lg-4">
